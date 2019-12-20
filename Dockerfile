@@ -5,7 +5,7 @@ LABEL maintainer="Leandro Henrique <emtudo@gmail.com>"
 
 # Variables for enabling
 ENV FRAMEWORK=laravel \
-    OPCACHE_MODE="extreme" \
+    OPCACHE_MODE="disabled" \
     PHP_MEMORY_LIMIT=512M \
     XDEBUG_ENABLED=true \
     TERM=xterm-256color \
