@@ -10,7 +10,8 @@ ENV FRAMEWORK=laravel \
     XDEBUG_ENABLED=true \
     TERM=xterm-256color \
     COLORTERM=truecolor \
-    COMPOSER_PROCESS_TIMEOUT=1200
+    COMPOSER_PROCESS_TIMEOUT=1200 \
+   LOAD_NGINX=true
 
 # Add the ENTRYPOINT script
 ADD start.sh /scripts/start.sh
