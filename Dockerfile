@@ -5,13 +5,14 @@ LABEL maintainer="Leandro Henrique <emtudo@gmail.com>"
 
 # Variables for enabling
 ENV FRAMEWORK=laravel \
-    OPCACHE_MODE="extreme" \
-    PHP_MEMORY_LIMIT=512M \
-    XDEBUG_ENABLED=true \
-    TERM=xterm-256color \
-    COLORTERM=truecolor \
-    COMPOSER_PROCESS_TIMEOUT=1200 \
-   LOAD_NGINX=true
+   OPCACHE_MODE="extreme" \
+   PHP_MEMORY_LIMIT=512M \
+   XDEBUG_ENABLED=true \
+   TERM=xterm-256color \
+   COLORTERM=truecolor \
+   COMPOSER_PROCESS_TIMEOUT=1200 \
+   NGINX_ENABLED=true \
+   SUPERVISOR_ENABLED=false
 
 # Add the ENTRYPOINT script
 ADD start.sh /scripts/start.sh
@@ -46,10 +47,14 @@ RUN echo "---> Enabling PHP-Alpine" && \
     php-bcmath \
     php-bz2 \
     php-calendar \
-    php-curl \
     php-ctype \
+    php-cgi \
+    php-curl \
+    php-dom \
+    php-ds \
     php-exif \
     php-fpm \
+    php-ftp \
     php-gd \
     php-gmp \
     php-iconv \
@@ -58,31 +63,32 @@ RUN echo "---> Enabling PHP-Alpine" && \
     php-intl \
     php-json \
     php-mbstring \
-    php-mysqli \
-    php-mysqlnd \
-    php-pdo_mysql \
     php-memcached \
     php-mongodb \
+    php-mysqli \
+    php-mysqlnd \
     php-opcache \
+    php-openssl \
+    php-pcntl \
+    php-pdo_mysql \
     php-pdo_pgsql \
+    php-pdo_sqlite \
     php-pgsql \
+    php-phar \
+    php-phpdbg \
     php-posix \
     php-redis \
     php-soap \
+    php-sockets \
+    php-swoole \
     php-sodium \
     php-sqlite3 \
-    php-pdo_sqlite \
     php-xdebug \
     php-xml \
     php-xmlreader \
-    php-openssl \
-    php-phar \
     php-xsl \
     php-zip \
-    php-zlib \
-    php-pcntl \
-    php-cgi \
-    php-phpdbg && \
+    php-zlib && \
     sudo ln -s /usr/bin/php7 /usr/bin/php && \
     sudo ln -s /usr/bin/php-cgi7 /usr/bin/php-cgi && \
     sudo ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm && \
@@ -115,6 +121,12 @@ RUN echo "---> Enabling PHP-Alpine" && \
     chown -R emtudo:emtudo /home/emtudo && \
     chmod +x /scripts/start.sh && \
     rm -rf /tmp/*
+
+# Supervisor
+RUN echo -e "\n # ---> Installing Supervisor \n" && \
+  apk add --no-cache --update supervisor
+
+COPY supervisord.conf /etc/
 
 # Application directory
 WORKDIR "/var/www/app"

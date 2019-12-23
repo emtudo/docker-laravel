@@ -47,7 +47,7 @@ fi
 
 #!/bin/bash
 
-if [[ $LOAD_NGINX == true ]]; then
+if [[ $NGINX_ENABLED == true ]]; then
     echo "Aliasing $FRAMEWORK"
     sudo ln -s /etc/nginx/sites/$FRAMEWORK.conf /etc/nginx/sites/enabled.conf
 
@@ -56,6 +56,10 @@ if [[ $LOAD_NGINX == true ]]; then
 
     # Starts NGINX!
     nginx
+fi
+
+if [[ $SUPERVISOR_ENABLED == true ]]; then
+    /usr/bin/supervisord -c /etc/supervisord.conf
 fi
 
 # run the original command
