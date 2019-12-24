@@ -15,6 +15,7 @@ ENV FRAMEWORK=laravel \
    SUPERVISOR_ENABLED=false
 
 # Add the ENTRYPOINT script
+RUN mkdir /scripts
 ADD start.sh /scripts/start.sh
 ADD bashrc /home/emtudo/.bashrc
 ADD bashrc /home/bashrc
@@ -51,7 +52,6 @@ RUN echo "---> Enabling PHP-Alpine" && \
     php-cgi \
     php-curl \
     php-dom \
-    php-ds \
     php-exif \
     php-fpm \
     php-ftp \
