@@ -7,12 +7,11 @@ LABEL maintainer="Leandro Henrique <emtudo@gmail.com>"
 ENV FRAMEWORK=laravel \
    OPCACHE_MODE="extreme" \
    PHP_MEMORY_LIMIT=512M \
-   XDEBUG_ENABLED=true \
+   XDEBUG_ENABLED=false \
    TERM=xterm-256color \
    COLORTERM=truecolor \
    COMPOSER_PROCESS_TIMEOUT=1200 \
-   NGINX_ENABLED=true \
-   SUPERVISOR_ENABLED=false
+   NGINX_ENABLED=true
 
 # Add the ENTRYPOINT script
 RUN mkdir /scripts

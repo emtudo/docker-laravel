@@ -58,7 +58,7 @@ if [[ $NGINX_ENABLED == true ]]; then
     nginx
 fi
 
-if [[ $SUPERVISOR_ENABLED == true ]]; then
+if [[ $NGINX_ENABLED == false ]]; then
     /usr/bin/supervisord -c /etc/supervisord.conf
 fi
 
