@@ -23,12 +23,12 @@ ADD bashrc /home/bashrc
 
 # Install PHP From DotDeb, Common Extensions, Composer and then cleanup
 RUN echo "---> Enabling PHP-Alpine" && \
-    apk add --update wget && \
+    apk add --no-cache --update wget && \
     wget -O /etc/apk/keys/php-alpine.rsa.pub https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub && \
     echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/main" > /etc/apk/repositories && \
     echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories && \
     echo "https://dl.bintray.com/php-alpine/v3.10/php-7.4" >> /etc/apk/repositories && \
-    apk add --update \
+    apk add --no-cache --update \
     curl \
     bash \
     fontconfig \
@@ -43,7 +43,7 @@ RUN echo "---> Enabling PHP-Alpine" && \
     make \
     sudo && \
     echo "---> Preparing and Installing PHP" && \
-    apk add --update \
+    apk add --no-cache --update \
     php \
     php-apcu \
     php-bcmath \

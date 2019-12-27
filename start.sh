@@ -46,9 +46,9 @@ if [[ $XDEBUG_ENABLED == true ]]; then
 fi
 
 if [[ $ENVIRONMENT == "production" ]]; then
-  echo -e "\n # ---> Optimize \n" && \
-  php artisan config:cache && \
-  php artisan route:cache
+  # echo -e "\n # ---> Optimize \n" && \
+  # php artisan config:cache && \
+  # php artisan route:cache
   echo -e "\n # ---> Keys \n" && \
   echo $PASSPORT_PRIVATE > /var/www/app/storage/oauth-private.key && \
   echo $PASSPORT_PUBLIC > /var/www/app/storage/oauth-public.key
