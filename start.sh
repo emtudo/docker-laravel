@@ -47,6 +47,14 @@ fi
 
 #!/bin/bash
 
+if [[ $SUPERVISOR == true ]]; then
+    echo "Supervisor Settings"
+    [ -d /var/log/supervisor ] || mkdir -p /var/log/supervisor
+    sudo chown -R emtudo:emtudo /var/run
+    sudo chown -R emtudo:emtudo /run
+    /usr/bin/supervisord -c /etc/supervisord.conf
+fi
+
 if [[ $NGINX_ENABLED == true ]]; then
     echo "Aliasing $FRAMEWORK"
     sudo ln -s /etc/nginx/sites/$FRAMEWORK.conf /etc/nginx/sites/enabled.conf
@@ -56,10 +64,6 @@ if [[ $NGINX_ENABLED == true ]]; then
 
     # Starts NGINX!
     nginx
-fi
-
-if [[ $NGINX_ENABLED == false ]]; then
-    /usr/bin/supervisord -c /etc/supervisord.conf
 fi
 
 # run the original command

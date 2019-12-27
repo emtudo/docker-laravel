@@ -11,7 +11,8 @@ ENV FRAMEWORK=laravel \
    TERM=xterm-256color \
    COLORTERM=truecolor \
    COMPOSER_PROCESS_TIMEOUT=1200 \
-   NGINX_ENABLED=true
+   NGINX_ENABLED=true \
+   SUPERVISOR=false
 
 # Add the ENTRYPOINT script
 RUN mkdir /scripts
