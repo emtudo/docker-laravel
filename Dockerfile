@@ -12,7 +12,8 @@ ENV FRAMEWORK=laravel \
    COLORTERM=truecolor \
    COMPOSER_PROCESS_TIMEOUT=1200 \
    NGINX_ENABLED=true \
-   SUPERVISOR=false
+   SUPERVISOR=false \
+   ENVIRONMENT=production
 
 # Add the ENTRYPOINT script
 RUN mkdir /scripts

@@ -45,7 +45,14 @@ if [[ $XDEBUG_ENABLED == true ]]; then
 
 fi
 
-#!/bin/bash
+if [[ $ENVIRONMENT == "production" ]]; then
+  echo -e "\n # ---> Optimize \n" && \
+  php artisan config:cache && \
+  php artisan route:cache
+  echo -e "\n # ---> Keys \n" && \
+  echo $PASSPORT_PRIVATE > /var/www/app/storage/oauth-private.key && \
+  echo $PASSPORT_PUBLIC > /var/www/app/storage/oauth-public.key
+fi
 
 if [[ $SUPERVISOR == true ]]; then
     echo "Supervisor Settings"
@@ -53,6 +60,8 @@ if [[ $SUPERVISOR == true ]]; then
     sudo chown -R emtudo:emtudo /var/run
     sudo chown -R emtudo:emtudo /run
     /usr/bin/supervisord -c /etc/supervisord.conf
+    echo -e "\n # ---> Crontab \n" && \
+    (echo '* * * * * php /var/www/app/artisan schedule:run') | crontab -
 fi
 
 if [[ $NGINX_ENABLED == true ]]; then
