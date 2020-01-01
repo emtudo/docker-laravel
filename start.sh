@@ -61,7 +61,7 @@ if [[ $SUPERVISOR == true ]]; then
     sudo chown -R emtudo:emtudo /run
     /usr/bin/supervisord -c /etc/supervisord.conf
     echo -e "\n # ---> Crontab \n" && \
-    (echo '* * * * * php /var/www/app/artisan schedule:run') | crontab -
+    (echo '* * * * * /usr/bin/php7 /var/www/app/artisan schedule:run') | crontab -
 fi
 
 if [[ $NGINX_ENABLED == true ]]; then
