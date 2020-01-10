@@ -1,7 +1,9 @@
-FROM alpine:3.10
+FROM alpine:3.11
 
 # Repository/Image Maintainer
 LABEL maintainer="Leandro Henrique <emtudo@gmail.com>"
+
+USER root
 
 # Variables for enabling
 ENV FRAMEWORK=laravel \
@@ -9,11 +11,15 @@ ENV FRAMEWORK=laravel \
    PHP_MEMORY_LIMIT=512M \
    XDEBUG_ENABLED=false \
    TERM=xterm-256color \
+   LARAVEL_CACHE=true \
+   MIGRATE=true \
    COLORTERM=truecolor \
    COMPOSER_PROCESS_TIMEOUT=1200 \
    NGINX_ENABLED=true \
    SUPERVISOR=false \
    ENVIRONMENT=production
+
+COPY start.sh  /home/start.sh
 
 # Add the ENTRYPOINT script
 RUN mkdir /scripts
@@ -30,6 +36,7 @@ RUN echo "---> Enabling PHP-Alpine" && \
     echo "https://dl.bintray.com/php-alpine/v3.10/php-7.4" >> /etc/apk/repositories && \
     apk add --no-cache --update \
     curl \
+    poppler \
     bash \
     fontconfig \
     libxrender \
@@ -135,11 +142,6 @@ WORKDIR "/var/www/app"
 # Environment variables
 ENV PATH=/home/emtudo/.composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-# Define the entry point that tries to enable
-ENTRYPOINT ["/tini", "--", "/scripts/start.sh"]
-
-# file 2
-
 # Copy nginx and entry script
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY ssl.conf /etc/nginx/ssl.conf
@@ -167,16 +169,14 @@ RUN openssl req -x509 -nodes -days 3650 \
    -out /home/ssl/nginx.crt -subj "/C=AM/ST=emtudo/L=emtudo/O=emtudo/CN=*.test" && \
    openssl dhparam -out /home/ssl/dhparam.pem 2048
 
-# Application directory
-WORKDIR "/var/www/app"
-
 # Expose webserver port
 EXPOSE 80
 EXPOSE 443
 EXPOSE 9000
 
-# Define the running user
-USER root
+# Define the entry point that tries to enable
+ENTRYPOINT ["/tini", "--", "/scripts/start.sh"]
 
-# Starts a single shell script that puts php-fpm as a daemon and nginx on foreground
-CMD ["/home/start.sh"]
+# As non daemon and single base image, it may be used as cli container
+CMD ["/bin/bash"]
+
