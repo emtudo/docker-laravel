@@ -62,6 +62,9 @@ if [[ $SUPERVISOR == true ]]; then
   echo -e "\n # ---> Crontab \n" && \
   (echo '* * * * * /usr/bin/php7 /var/www/app/artisan schedule:run') | crontab -
   /usr/sbin/crond
+  if [[ $NGINX_ENABLED == false ]]; then
+    /usr/bin/supervisord -n -c /etc/supervisord.conf
+  fi  
   /usr/bin/supervisord -c /etc/supervisord.conf
 fi
 
