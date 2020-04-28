@@ -18,7 +18,7 @@ ENV FRAMEWORK=laravel \
   NGINX_ENABLED=true \
   SUPERVISOR=false \
   ENVIRONMENT=production \
-  $SUPERVISOR_SCHEDULE="* * * * * /usr/bin/php7 /var/www/app/artisan schedule:run"
+  SUPERVISOR_SCHEDULE="* * * * * /usr/bin/php7 /var/www/app/artisan schedule:run"
 
 COPY start.sh  /home/start.sh
 
