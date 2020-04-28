@@ -61,7 +61,7 @@ if [[ $SUPERVISOR == true ]]; then
   sudo chown -R emtudo:emtudo /run
 
   echo -e "\n # ---> Crontab \n" && \
-  (echo $SUPERVISOR_SCHEDULE) | crontab -
+  (echo "$SUPERVISOR_SCHEDULE") | crontab -
   /usr/sbin/crond
   if [[ $NGINX_ENABLED == false ]]; then
     /usr/bin/supervisord -n -c /etc/supervisord.conf
